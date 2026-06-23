@@ -139,7 +139,7 @@ for _, provider in providers.iterrows():
         tickets = min(int(np.random.poisson(tickets_lambda)), 10)
 
         visit_rows.append({
-            'visit_id': None,            # assigned after all rows created
+            'visit_id_placeholder': None, # assigned after all rows created
             'provider_id': provider['provider_id'],
             'visit_date': vdate.strftime('%Y-%m-%d'),
             'visit_year': vdate.year,

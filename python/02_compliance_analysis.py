@@ -27,11 +27,11 @@ print(f"Loaded: {len(providers):,} providers, {len(visits):,} visits, "
 # ──────────────────────────────────────────────────────────
 # 1. OVERALL COMPLIANCE RATE
 # ──────────────────────────────────────────────────────────
-v_clean = visits_enr['visits_enr'['compliant_flag'].notna()]
+v_clean = visits_enr[visits_enr['compliant_flag'].notna()]
 
 overall_compliance = (v_clean['compliant_flag'] == 'Y').mean() * 100
 
-print(f"\n[1] OVERALL COMPLIANCE RATE8={overall_compliance:.1f}%")
+print(f"\n[1] OVERALL COMPLIANCE RATE = {overall_compliance:.1f}%")
 print(f"     Visits analyzed: {len(v_clean):,}")
 print(f"     Compliant: {(v_clean['compliant_flag'] == 'Y').sum():,}")
 
@@ -59,9 +59,9 @@ bars = ax.barh(
             else '#E76F51' for x in compliance_by_type['compliance_pct']]
 )
 ax.set_xlim(60, 100)
-ax.set_xmajorlocator(plt.MultipleLocator(5))
-ax.set_xtick_params(labelsize=11)
-ax.set_ytick_params(labelsize=11)
+ax.xaxis.set_major_locator(plt.MultipleLocator(5))
+ax.tick_params(axis='x', labelsize=11)
+ax.tick_params(axis='y', labelsize=11)
 ax.axvline(overall_compliance, color='gray', linestyle='--',
            label=f'Overall {overall_compliance:.1f}%')
 for bar, val in zip(bars, compliance_by_type['compliance_pct']):
@@ -159,7 +159,7 @@ print(risk_summary.to_string())
 # Export risk scores
 risk_data = provider_metrics.merge(
     providers[['provider_id', 'provider_type','jurisdiction_id',
-                'urnban_rural', 'unenrolled_flag']],
+                'urban_rural', 'unenrolled_flag']],
     on='provider_id', how='left')
 risk_data.to_csv('outputs/provider_risk_scores.csv', index=False)
 
